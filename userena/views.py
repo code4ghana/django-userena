@@ -395,6 +395,9 @@ def signin(request, auth_form=AuthenticationForm,
 
     """
     form = auth_form()
+    if request.user.is_authenticated():
+        redirect_to = redirect_signin_function(request.REQUEST.get(redirect_field_name), request.user)
+        return HttpResponseRedirect(redirect_to)
 
     if request.method == 'POST':
         form = auth_form(request.POST, request.FILES)
